@@ -19,7 +19,7 @@ const userSlice = createSlice({
     refreshToken: "",
     countCart: UserServices.getCountCart(),
     cartLocal: JSON.parse(localStorage.getItem("cart")) || [],
-    socketIo: io("http://localhost:3002"),
+    socketIo: io("https://sunsine-api.herokuapp.com"),
   },
   reducers: {
     addCart: (state, action) => {
