@@ -1,0 +1,18 @@
+.sider {
+  left: 0;
+  position: fixed;
+  height: 100%;
+  transition: 0.3s;
+  width: 200px;
+  z-index: 99;
+  @include breakpoint(992) {
+    left: -100%;
+  }
+  &-menu {
+    height: 93%;
+    overflow-y: auto;
+  }
+}
+.activeSider {
+  left: 0 !important;
+}

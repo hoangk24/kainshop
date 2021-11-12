@@ -1,0 +1,12 @@
+.product-card {
+  .price {
+    @include breakpoint(535) {
+      font-size: 0.7rem !important;
+    }
+  }
+  .ant-card-body {
+    @include breakpoint(992) {
+      padding: 0.7rem !important;
+    }
+  }
+}

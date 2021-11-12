@@ -1,0 +1,135 @@
+.product-detail {
+  padding: 2rem;
+  @include breakpoint(992) {
+    padding: 0;
+  }
+  z-index: 98;
+  &__content {
+    @include breakpoint(992) {
+      padding: 0;
+    }
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    background-color: white;
+    @include breakpoint(992) {
+      grid-template-columns: 100%;
+    }
+
+    .slick-slider {
+      padding: 1rem;
+      img {
+        display: block;
+        width: 100%;
+      }
+
+      .group-array-image {
+        display: grid !important;
+        grid-template-columns: 25% 25% 25% 25%;
+        padding: 10px;
+        background: #fdf9ff;
+        position: relative;
+        border-radius: 8px;
+        img {
+          display: block;
+          width: 100%;
+        }
+
+        li {
+          transition: 0.3s;
+          border: 2px white solid;
+          margin: 0.3rem;
+          border-radius: 1rem;
+          overflow: hidden;
+        }
+
+        .slick-active {
+          border: 2px blue solid;
+        }
+      }
+    }
+
+    .product-info {
+      padding: 0 1rem;
+
+      h1 {
+        background-color: blue;
+        text-align: center;
+        color: white;
+        padding: 0.3rem 0;
+        border-radius: 1rem;
+        font-size: 1.3rem;
+      }
+
+      .info-more {
+        background: #f0f2f5;
+        padding: 1rem;
+        border-radius: 1rem;
+        font-size: 1.1rem;
+        @include breakpoint(992) {
+          font-size: 0.9rem;
+        }
+        .rate {
+          margin-bottom: 1rem;
+
+          .ant-rate-star-zero {
+            color: wheat !important;
+          }
+        }
+
+        .label {
+          font-weight: bold;
+        }
+      }
+
+      .delivery {
+        margin-top: 0.3rem;
+        font-size: 1rem;
+        text-align: center;
+        padding: 1rem;
+        background: #d6f5d6;
+        border-radius: 1rem;
+
+        h3 {
+          margin: 0;
+        }
+      }
+      .submit-button {
+        text-align: center;
+        button {
+          width: 50%;
+          border-radius: 1rem;
+          border: none;
+          background-color: blue;
+          color: white;
+          padding: 1rem;
+          margin-top: 2rem;
+        }
+      }
+      .buy-form {
+        h1 {
+          background: none;
+          color: black;
+        }
+        border-radius: 1rem;
+        margin-top: 0.3rem;
+        padding: 1rem;
+        background: #f0f2f5;
+      }
+    }
+  }
+  &-bottom {
+    margin-top: 10px;
+    padding: 1rem;
+    background: white;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    h1 {
+      font-size: 1.3rem;
+    }
+  }
+  &-comment {
+    padding: 1rem;
+    background-color: white;
+  }
+}

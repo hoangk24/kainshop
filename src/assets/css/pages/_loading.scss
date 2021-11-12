@@ -1,0 +1,19 @@
+.loading {
+  position: absolute;
+  z-index: 998;
+  inset: 0;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .spin {
+    width: 50px;
+    height: 50px;
+    img {
+      display: block;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+}

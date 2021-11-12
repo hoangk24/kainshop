@@ -1,0 +1,17 @@
+.product {
+  padding: 1rem;
+
+  background-color: white;
+  &__content {
+    min-height: 100vh;
+    position: relative;
+    background: #f0f2f5;
+    overflow: hidden;
+    padding: 1rem;
+  }
+  &-heading {
+    text-align: center;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+  }
+}

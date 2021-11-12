@@ -1,0 +1,13 @@
+.account {
+  padding: 2rem;
+  flex: 1;
+  width: 100%;
+  min-height: 100vh;
+  &__title {
+    text-align: center;
+  }
+  // &__search {
+  //   width: 300px;
+  //   margin-bottom: 1rem;
+  // }
+}

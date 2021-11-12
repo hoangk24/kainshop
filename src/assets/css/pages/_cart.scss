@@ -1,0 +1,25 @@
+.cart {
+  padding: 1rem;
+  &__content {
+  }
+  .cart-body {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    background: white;
+    padding: 1rem;
+    h1 {
+      font-size: 2rem;
+      text-align: center;
+    }
+  }
+  .hide {
+    display: none;
+    @include breakpoint(992) {
+      display: block;
+    }
+  }
+  .form-description {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

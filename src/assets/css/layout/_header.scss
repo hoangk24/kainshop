@@ -1,0 +1,99 @@
+.header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  padding: 1rem 0;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  &__logo {
+    font-size: 2rem;
+    color: white;
+    padding: 0;
+    margin-left: 1rem;
+    margin-bottom: 0;
+    margin-right: 2rem;
+  }
+
+  &__search {
+    display: flex;
+    flex: 1;
+    @include breakpoint(992) {
+      flex: 0;
+    }
+
+    .button {
+      margin-right: 0.5rem;
+      display: none;
+      @include breakpoint(992) {
+        display: block;
+      }
+    }
+
+    .search {
+      width: 100%;
+      @include breakpoint(992) {
+        display: none !important;
+      }
+    }
+  }
+
+  &__bar {
+    display: none;
+    @include breakpoint(992) {
+      display: block;
+    }
+  }
+
+  &__cart {
+    margin-right: 0.5rem;
+  }
+
+  &__services {
+    display: flex;
+    align-items: center;
+    color: white;
+    white-space: nowrap;
+    position: relative;
+    margin: 0;
+
+    .avatar {
+      width: 2rem;
+      height: 2rem;
+      overflow: hidden;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-right: 3px;
+
+      img {
+        width: 100%;
+        display: block;
+        object-fit: cover;
+      }
+    }
+
+    .name {
+      transition: 0.3s;
+      @include breakpoint(992) {
+        display: none;
+      }
+
+      &:hover {
+        color: red;
+        cursor: pointer;
+      }
+    }
+  }
+  .user-button {
+    @include breakpoint(992) {
+      display: none;
+    }
+  }
+  .user-dropdown {
+    display: none;
+    @include breakpoint(992) {
+      display: block;
+    }
+  }
+}
