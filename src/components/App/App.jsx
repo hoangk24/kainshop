@@ -33,6 +33,9 @@ function App() {
     if (!localStorage.getItem("cart")) {
       localStorage.setItem("cart", JSON.stringify([]));
     }
+    return () => {
+      socketIo.disconnect();
+    };
   }, []);
 
   useEffect(() => {

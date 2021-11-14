@@ -15,13 +15,11 @@ const UserServices = {
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("accessToken", JSON.stringify(accessToken));
     localStorage.setItem("refreshToken", JSON.stringify(refreshToken));
-    // localStorage.setItem("cart", JSON.stringify(history));
   },
   removeUser: () => {
     localStorage.removeItem("user");
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
-    localStorage.removeItem("cart");
   },
   getUserCart: () => {
     return JSON.parse(localStorage.getItem("cart"));

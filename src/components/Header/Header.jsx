@@ -25,7 +25,9 @@ function Header() {
   const menuServices = (
     <Menu>
       <Menu.Item key='1'>Quản lí thông tin</Menu.Item>
-      <Menu.Item key='2'>Lịch sử mua hàng</Menu.Item>
+      <Menu.Item key='2'>
+        <Link to='/cart-history'>Lịch sử mua hàng</Link>
+      </Menu.Item>
       <Menu.Item key='3' onClick={() => handleLogout()}>
         Đăng xuất
       </Menu.Item>
@@ -54,7 +56,7 @@ function Header() {
         icon={<BarsOutlined />}
       />
       <h1 className={"header__logo"}>
-        <Link to='/'>KAIN SHOP</Link>
+        <Link to='/'>KAIN</Link>
       </h1>
       <div className='header__search ml-auto'>
         <Button className={"button"} icon={<SearchOutlined />} />

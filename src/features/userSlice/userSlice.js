@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, register, log_out } from "./userThunk";
+import { login, register, log_out, order } from "./userThunk";
 import UserServices from "../../helper/userLocal";
 import { message, notification } from "antd";
 import { io } from "socket.io-client";
@@ -19,7 +19,7 @@ const userSlice = createSlice({
     refreshToken: "",
     countCart: UserServices.getCountCart(),
     cartLocal: JSON.parse(localStorage.getItem("cart")) || [],
-    socketIo: io("https://sunsine-api.herokuapp.com"),
+    socketIo: io("http://localhost:3002"),
   },
   reducers: {
     addCart: (state, action) => {
@@ -74,6 +74,16 @@ const userSlice = createSlice({
       state.cartLocal = [];
       state.countCart = 0;
       message.success("Đăng xuất thành công");
+    },
+    [order.pending]: (state, action) => {},
+    [order.fulfilled]: (state, action) => {
+      localStorage.setItem("cart", JSON.stringify([]));
+      state.cartLocal = [];
+      state.countCart = 0;
+      message.success("Đặt hàng thành công!");
+    },
+    [order.rejected]: (state, action) => {
+      message.error("Đặt hàng thất bại!");
     },
   },
 });

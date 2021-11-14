@@ -8,10 +8,11 @@ import {
   Rate,
   message,
 } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { productApi } from "../../../api/productApi";
 export default function ProductComment({ idProduct }) {
+  const [form] = Form.useForm();
   const user = useSelector((state) => state.user.user);
   const isLogin = useSelector((state) => state.user.isLogin);
   const socketIo = useSelector((state) => state.user.socketIo);
@@ -30,20 +31,39 @@ export default function ProductComment({ idProduct }) {
       content: value.comment,
     };
     socketIo.emit("userCreateComment", comment);
+    form.resetFields();
+  };
+
+  const deleteComment = (e, idComment) => {
+    e.preventDefault();
+    const data = {
+      idProduct,
+      idUser: user._id,
+      idComment,
+    };
+    socketIo.emit("userDeleteComment", data);
   };
   useEffect(async () => {
-    if (idProduct) {
-      const data = await productApi.getCommentProduct(idProduct);
-      setData(data);
-    }
     socketIo.emit("joinRoom", idProduct);
+    if (idProduct) {
+      const comment = await productApi.getCommentProduct(idProduct);
+      setData(comment);
+    }
     socketIo.on("newCommentAdded", (comment) => {
+      console.log(comment);
       setData(comment);
     });
-    return () => {
-      socketIo.emit("outRoom", idProduct);
-    };
+    socketIo.on("aCommentDeleted", (comment) => {
+      console.log(comment);
+      setData(comment);
+    });
   }, [socketIo, idProduct]);
+
+  useEffect(() => {
+    return () => {
+      socketIo.emit("leaveRoom", idProduct);
+    };
+  }, []);
 
   return (
     <div className='product-detail-comment'>
@@ -52,20 +72,47 @@ export default function ProductComment({ idProduct }) {
           className='comment-list'
           header={`${data.length} bình luận`}
           dataSource={data}
-          renderItem={(item) => (
-            <Comment
-              author={item.fullName}
-              avatar={<Avatar src={item.avatar} />}
-              content={item.content}
-              datetime={item.createdAt}
-            />
-          )}
+          renderItem={(item) => {
+            return (
+              <List.Item
+                actions={
+                  isLogin && user._id === item.idUser
+                    ? [
+                        <a
+                          onClick={(e) => deleteComment(e, item._id)}
+                          key='list-loadmore-edit'
+                        >
+                          Xóa
+                        </a>,
+                        <a key='list-loadmore-more'>Sửa</a>,
+                      ]
+                    : []
+                }
+              >
+                <Comment
+                  author={item.fullName}
+                  avatar={<Avatar src={item.avatar} />}
+                  content={item.content}
+                  datetime={item.createdAt}
+                />
+              </List.Item>
+            );
+          }}
         />
       ) : (
         <div>Chưa có bình luận nào</div>
       )}
-      <Form layout='vertical' onFinish={onFinish}>
-        <Form.Item label='Thêm bình luận' name='comment'>
+      <Form
+        layout='vertical'
+        onFinish={onFinish}
+        form={form}
+        initialValues={{ comment: "" }}
+      >
+        <Form.Item
+          label='Thêm bình luận'
+          name='comment'
+          rules={[{ required: true, message: "Hãy thêm bình luận của bạn" }]}
+        >
           <TextArea />
         </Form.Item>
         <Form.Item>

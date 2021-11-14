@@ -1,10 +1,12 @@
 .cart {
   padding: 1rem;
+
   &__content {
   }
   .cart-body {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     background: white;
+    min-height: 100vh;
     padding: 1rem;
     h1 {
       font-size: 2rem;
@@ -21,5 +23,69 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+}
+
+.cart-no-cart {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &__content {
+    background-color: transparent;
+    @include breakpoint(992) {
+      background-color: none;
+    }
+    padding: 2rem;
+    border-radius: 1rem;
+    text-align: center;
+    h1 {
+      font-size: 1.7rem;
+      @include breakpoint(992) {
+        font-size: 1.3rem;
+      }
+    }
+    p {
+      font-size: 1rem;
+      color: gray;
+      margin-bottom: 2rem;
+    }
+    a {
+      background-color: rgb(7, 7, 179);
+      font-size: 1.3rem;
+      color: white;
+      &:hover {
+        background-color: blue;
+      }
+      border-radius: 1rem;
+      padding: 1rem;
+      @include breakpoint(992) {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+.cart-history {
+  padding: 1rem;
+
+  &__content {
+    h1 {
+      font-size: 2rem;
+      padding-top: 1rem;
+      text-align: center;
+    }
+    min-height: 100vh;
+    background-color: white;
+    .cart-item {
+      padding: 3rem;
+    }
+    .cart-img {
+      .info {
+        display: none;
+        @include breakpoint(992) {
+          display: block;
+        }
+      }
+    }
   }
 }

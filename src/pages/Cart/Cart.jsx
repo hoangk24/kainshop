@@ -6,6 +6,7 @@ import {
   Form,
   Input,
   InputNumber,
+  message,
   Row,
   Space,
   Table,
@@ -13,6 +14,9 @@ import {
 import UserServices from "../../helper/userLocal";
 import { useDispatch, useSelector } from "react-redux";
 import { editCount, removeCart } from "../../features/userSlice/userSlice";
+import { cartApi } from "../../api/cartApi";
+import { order } from "../../features/userSlice/userThunk";
+import { Link } from "react-router-dom";
 
 function Cart() {
   const cart = useSelector((state) => state.user.cartLocal);
@@ -26,7 +30,7 @@ function Cart() {
   };
   const sum = () => {
     let total = 0;
-    let count = [];
+    let count = 0;
     cart.forEach((item) => {
       total += item.total;
       count += item.count;
@@ -105,10 +109,31 @@ function Cart() {
       responsive: ["lg"],
     },
   ];
+
+  const onFinish = async (value) => {
+    const sumCart = sum();
+    const data = {
+      list: cart,
+      ...value,
+      total: sumCart[0],
+      count: sumCart[1],
+    };
+    dispatch(order(data));
+  };
   useEffect(() => {
     document.querySelector(".sider").classList.remove("activeSider");
   }, []);
-
+  if (cart?.length === 0) {
+    return (
+      <div className='cart-no-cart'>
+        <div className='cart-no-cart__content'>
+          <h1>Không có sản phẩm nào trong giỏ hàng</h1>
+          <p>Hãy tiếp tục mua sắm nào!</p>
+          <Link to='/'>Tiếp tục mua sắm</Link>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className={"cart"}>
       <div className='cart__content'>
@@ -134,16 +159,32 @@ function Cart() {
               <div style={{ fontWeight: "600" }}>Tổng số lượng: {sum()[1]}</div>
             </Col>
             <Col lg={12} md={24}>
-              <Form style={{ padding: "1rem" }} labelCol={{ span: 5 }}>
-                <Form.Item label={"Địa chỉ nhận"}>
+              <Form
+                style={{ padding: "1rem" }}
+                labelCol={{ span: 5 }}
+                onFinish={onFinish}
+              >
+                <Form.Item
+                  label={"Địa chỉ nhận"}
+                  name='address'
+                  rules={[
+                    { required: true, message: "Địa chỉ không được để trống!" },
+                  ]}
+                >
                   <Input />
                 </Form.Item>
-                <Form.Item label={"Số điện thoại"}>
+                <Form.Item
+                  label={"Số điện thoại"}
+                  name='phoneNumber'
+                  rules={[
+                    { required: true, message: "Địa chỉ không được để trống!" },
+                  ]}
+                >
                   <Input />
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 5 }}>
                   <Button type={"primary"} htmlType={"submit"}>
-                    Mua hàng
+                    Đặt hàng
                   </Button>
                 </Form.Item>
               </Form>
