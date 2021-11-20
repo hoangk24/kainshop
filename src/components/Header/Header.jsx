@@ -63,10 +63,6 @@ function Header() {
         <Search placeholder={"Search"} className={"search"} />
       </div>
       <Badge count={countCart} showZero className={"header__cart"}>
-        {/* <Button
-          onClick={() => history.push("/cart")}
-          icon={<ShoppingCartOutlined />}
-        /> */}
         <a href='/cart'>
           <ShoppingCartOutlined style={{ fontSize: "2rem" }} />
         </a>
@@ -81,29 +77,27 @@ function Header() {
           </div>
         </Dropdown>
       ) : (
-        <div className='ml-auto'>
-          <Space>
-            <Button
-              className='user-button'
-              onClick={() => history.push("/login")}
-            >
-              Đăng nhập
-            </Button>
-            <Button
-              className='user-button'
-              onClick={() => history.push("/register")}
-            >
-              Đăng ký
-            </Button>
-            <Dropdown
-              className='user-dropdown'
-              overlay={menuExc}
-              trigger={["click"]}
-            >
-              <Button icon={<UserOutlined />}></Button>
-            </Dropdown>
-          </Space>
-        </div>
+        <Space>
+          <Button
+            className='user-button'
+            onClick={() => history.push("/login")}
+          >
+            Đăng nhập
+          </Button>
+          <Button
+            className='user-button'
+            onClick={() => history.push("/register")}
+          >
+            Đăng ký
+          </Button>
+          <Dropdown
+            className='user-dropdown'
+            overlay={menuExc}
+            trigger={["click"]}
+          >
+            <Button icon={<UserOutlined />}></Button>
+          </Dropdown>
+        </Space>
       )}
     </Header>
   );

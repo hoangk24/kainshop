@@ -19,7 +19,7 @@ const userSlice = createSlice({
     refreshToken: "",
     countCart: UserServices.getCountCart(),
     cartLocal: JSON.parse(localStorage.getItem("cart")) || [],
-    socketIo: io(process.env.SOCKET),
+    socketIo: io("https://kain-api.herokuapp.com"),
   },
   reducers: {
     addCart: (state, action) => {
