@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, register, log_out, order } from "./userThunk";
+import { login, register, order } from "./userThunk";
 import UserServices from "../../helper/userLocal";
 import { message, notification } from "antd";
 import { io } from "socket.io-client";
@@ -38,6 +38,13 @@ const userSlice = createSlice({
       state.cartLocal = UserServices.getUserCart();
       console.log(state.cartLocal);
     },
+    log_out: (state, action) => {
+      localStorage.removeItem("user");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      state.isLogin = false;
+      state.user = {};
+    },
   },
   extraReducers: {
     [login.pending]: (state, action) => {
@@ -68,13 +75,6 @@ const userSlice = createSlice({
     [register.rejected]: (state, action) => {
       state.isLoadingRegister = false;
     },
-    [log_out.fulfilled]: (state, action) => {
-      UserServices.removeUser();
-      state.isLogin = false;
-      state.cartLocal = [];
-      state.countCart = 0;
-      message.success("Đăng xuất thành công");
-    },
     [order.pending]: (state, action) => {},
     [order.fulfilled]: (state, action) => {
       localStorage.setItem("cart", JSON.stringify([]));
@@ -88,5 +88,5 @@ const userSlice = createSlice({
   },
 });
 const { reducer, actions } = userSlice;
-export const { addCart, removeCart, editCount } = actions;
+export const { addCart, removeCart, editCount, log_out } = actions;
 export default reducer;

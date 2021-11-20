@@ -12,11 +12,11 @@ export const register = createAsyncThunk("user/register", async (data) => {
   return res;
 });
 
-export const log_out = createAsyncThunk("user/logout", async (data) => {
-  const { cart, idUser } = data;
-  const res = await userApi.update_history_cart(idUser, cart);
-  return res;
-});
+// export const log_out = createAsyncThunk("user/logout", async (data) => {
+//   const { cart, idUser } = data;
+//   const res = await userApi.update_history_cart(idUser, cart);
+//   return res;
+// });
 
 export const order = createAsyncThunk("user/order", async (data) => {
   const res = await cartApi.addCart(data);

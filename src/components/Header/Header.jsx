@@ -9,8 +9,8 @@ import {
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import UserServices from "../../helper/userLocal";
-import { log_out } from "../../features/userSlice/userThunk";
 import { Link } from "react-router-dom";
+import { log_out } from "../../features/userSlice/userSlice";
 function Header() {
   const history = useHistory();
   const isLogin = useSelector((state) => state.user.isLogin);
@@ -20,7 +20,7 @@ function Header() {
   const { Header } = Layout;
   const dispatch = useDispatch();
   const handleLogout = () => {
-    dispatch(log_out({ idUser: user._id, cart: UserServices.getUserCart() }));
+    dispatch(log_out());
   };
   const menuServices = (
     <Menu>
@@ -36,10 +36,10 @@ function Header() {
 
   const menuExc = (
     <Menu>
-      <Menu.Item>
+      <Menu.Item key={1}>
         <Link to='/login'>Đăng nhập</Link>
       </Menu.Item>
-      <Menu.Item>
+      <Menu.Item key={2}>
         <Link to='/register'>Đăng ký</Link>
       </Menu.Item>
     </Menu>
