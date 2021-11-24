@@ -4,12 +4,15 @@
   align-items: center;
   background-repeat: no-repeat;
   background-size: cover;
+  @include breakpoint(575) {
+    background-image: none !important;
+    background-color: white;
+  }
   flex: 1;
   min-height: 100vh;
   &__content {
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    // box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     background-color: white;
-    width: 400px;
     padding: 2rem;
     border-radius: 2rem;
   }

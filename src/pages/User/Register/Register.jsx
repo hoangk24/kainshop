@@ -27,6 +27,9 @@ function Register() {
     };
     dispatch(register(data));
   }, []);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   if (sendMailSuccess)
     return (
       <div
@@ -44,9 +47,7 @@ function Register() {
         </div>
       </div>
     );
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
+
   return (
     <div
       className={"register"}

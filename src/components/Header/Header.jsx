@@ -11,20 +11,25 @@ import { useDispatch, useSelector } from "react-redux";
 import UserServices from "../../helper/userLocal";
 import { Link } from "react-router-dom";
 import { log_out } from "../../features/userSlice/userSlice";
+import UserInfo from "./UserInfo/UserInfo";
 function Header() {
   const history = useHistory();
   const isLogin = useSelector((state) => state.user.isLogin);
   const user = useSelector((state) => state.user.user);
   const countCart = useSelector((state) => state.user.countCart);
+  const [UserInfoVisible, setUserInfoVisible] = useState(false);
   const { Search } = Input;
   const { Header } = Layout;
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(log_out());
   };
+  const onSearch = (value) => history.push(`/search?keyword=${value}`);
   const menuServices = (
     <Menu>
-      <Menu.Item key='1'>Quản lí thông tin</Menu.Item>
+      <Menu.Item key='1' onClick={() => setUserInfoVisible(true)}>
+        Quản lí thông tin
+      </Menu.Item>
       <Menu.Item key='2'>
         <Link to='/cart-history'>Lịch sử mua hàng</Link>
       </Menu.Item>
@@ -33,6 +38,10 @@ function Header() {
       </Menu.Item>
     </Menu>
   );
+
+  const closeUserInfoModal = () => {
+    setUserInfoVisible(false);
+  };
 
   const menuExc = (
     <Menu>
@@ -60,7 +69,11 @@ function Header() {
       </h1>
       <div className='header__search ml-auto'>
         <Button className={"button"} icon={<SearchOutlined />} />
-        <Search placeholder={"Search"} className={"search"} />
+        <Search
+          placeholder={"Search"}
+          className={"search"}
+          onSearch={onSearch}
+        />
       </div>
       <Badge count={countCart} showZero className={"header__cart"}>
         <a href='/cart'>
@@ -99,6 +112,11 @@ function Header() {
           </Dropdown>
         </Space>
       )}
+      <UserInfo
+        user={user}
+        visible={UserInfoVisible}
+        closeModal={closeUserInfoModal}
+      />
     </Header>
   );
 }

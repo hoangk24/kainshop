@@ -4,7 +4,7 @@
 @import "./layout/footer", "./layout/header", "./layout/sider",
   "./layout/content";
 
-@import "./components/product_card";
+@import "./components/product_card", "./components//userInfo";
 @import "./pages/home", "./pages/loading", "./pages/account", "./pages/login",
   "./pages/recoverPassword", "./pages/register", "./pages/activeMail",
   "./pages/product-admin", "./pages/product", "./pages/product-detail",

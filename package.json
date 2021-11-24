@@ -7,10 +7,12 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@africasokoni/react-image-magnifiers": "^1.0.2",
     "@ant-design/icons": "^4.7.0",
     "@reduxjs/toolkit": "^1.6.2",
     "antd": "^4.16.13",
     "axios": "^0.24.0",
+    "moment": "^2.29.1",
     "query-string": "^7.0.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",

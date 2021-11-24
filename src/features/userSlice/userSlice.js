@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, register, order } from "./userThunk";
+import {
+  login,
+  register,
+  order,
+  updateAvatar,
+  updateInfomation,
+} from "./userThunk";
 import UserServices from "../../helper/userLocal";
 import { message, notification } from "antd";
 import { io } from "socket.io-client";
@@ -9,6 +15,7 @@ const userSlice = createSlice({
   initialState: {
     sendMailSuccess: false,
     isLoadingRegister: false,
+    isLoading: false,
     isLogin: Boolean(UserServices.getUserInfo()),
     isAdmin: Boolean(
       UserServices.getUserInfo() && UserServices.getUserInfo().role === 1
@@ -19,7 +26,7 @@ const userSlice = createSlice({
     refreshToken: "",
     countCart: UserServices.getCountCart(),
     cartLocal: JSON.parse(localStorage.getItem("cart")) || [],
-    socketIo: io("https://kain-api.herokuapp.com"),
+    socketIo: io(import.meta.env.VITE_API_URL),
   },
   reducers: {
     addCart: (state, action) => {
@@ -85,6 +92,24 @@ const userSlice = createSlice({
     [order.rejected]: (state, action) => {
       message.error("Đặt hàng thất bại!");
     },
+    [updateAvatar.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [updateAvatar.fulfilled]: (state, action) => {
+      // message.success("Cật nhật ảnh đại diện thành công!");
+      state.isLoading = false;
+      state.user = action.payload;
+      localStorage.setItem("user", JSON.stringify(action.payload));
+    },
+    [updateAvatar.rejected]: (state, action) => {
+      state.isLoading = false;
+    },
+    [updateInfomation.pending]: (state, action) => {},
+    [updateInfomation.fulfilled]: (state, action) => {
+      localStorage.setItem("user", JSON.stringify(action.payload));
+      state.user = action.payload;
+    },
+    [updateInfomation.rejected]: (state, action) => {},
   },
 });
 const { reducer, actions } = userSlice;

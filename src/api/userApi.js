@@ -2,7 +2,6 @@ import { axiosClient } from "./axiosClient";
 
 export const userApi = {
   login: (user) => {
-    console.log(user);
     const url = "/user/login";
     return axiosClient.post(url, user);
   },
@@ -25,5 +24,18 @@ export const userApi = {
   update_history_cart: (idUser, cart) => {
     const url = `user/update-history-cart?id=${idUser}`;
     return axiosClient.post(url, { cart });
+  },
+  update_avatar: (data) => {
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    const url = "/user/update-avatar";
+    return axiosClient.post(url, data, config);
+  },
+  update_infomation: (data) => {
+    const url = "/user/update-infomation";
+    return axiosClient.post(url, data);
   },
 };

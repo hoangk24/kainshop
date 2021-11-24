@@ -4,7 +4,7 @@ import { message } from "antd";
 import UserServices from "../helper/userLocal";
 
 export const axiosClient = axios.create({
-  baseURL: "https://kain-api.herokuapp.com/api",
+  baseURL: import.meta.env.VITE_API_ENDPOINT,
   headers: {
     Accept: "application/json",
   },

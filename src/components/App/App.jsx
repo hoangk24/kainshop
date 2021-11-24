@@ -11,7 +11,6 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 function App() {
-  const [userOnline, setUserOnline] = useState(0);
   const socketIo = useSelector((state) => state.user.socketIo);
   const renderAdminRoute = admin.map((item, index) => (
     <PrivateRoute

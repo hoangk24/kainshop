@@ -37,16 +37,16 @@ function Activemail(props) {
         style={{ backgroundImage: `url(${background})` }}
       >
         {!isError ? (
-          <>
+          <div className='activeMail__content'>
             <h1>Chúc mừng</h1>
             <p>
               Bạn đã xác thực thành công email <br />
               Hãy đăng nhập để trải nghiệm dịch vụ của chúng tôi cám ơn bạn rất
               nhiều
             </p>
-          </>
+          </div>
         ) : (
-          <>
+          <div className='activeMail__content'>
             <h1>Thông báo</h1>
             <p>
               Xác thực không thành công
@@ -54,7 +54,7 @@ function Activemail(props) {
               Hãy đăng ký lại để nhận lại mã xác thực mới
             </p>
             <Link to={"/register"}>Đăng ký lại</Link>
-          </>
+          </div>
         )}
         {isLoading ? <Loading /> : null}
       </div>

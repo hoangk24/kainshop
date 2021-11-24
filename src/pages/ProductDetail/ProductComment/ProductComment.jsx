@@ -8,6 +8,7 @@ import {
   Rate,
   message,
 } from "antd";
+import moment from "moment";
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { productApi } from "../../../api/productApi";
@@ -93,7 +94,7 @@ export default function ProductComment({ idProduct }) {
                   author={item.fullName}
                   avatar={<Avatar src={item.avatar} />}
                   content={item.content}
-                  datetime={item.createdAt}
+                  datetime={moment().startOf("hour").from(item.createdAt)}
                 />
               </List.Item>
             );

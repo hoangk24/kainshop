@@ -1,0 +1,27 @@
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  &-img {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    img {
+      display: block;
+      width: 100%;
+    }
+    .loading {
+      position: absolute;
+      inset: 0;
+    }
+  }
+  &-button {
+    margin-top: 1rem;
+  }
+}
+
+.info {
+}

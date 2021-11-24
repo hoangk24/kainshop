@@ -43,8 +43,15 @@ function Login() {
           >
             <Input.Password />
           </Form.Item>
-          <Form.Item wrapperCol={{ offset: 10, span: 14 }}>
+          <Form.Item
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <Button
+              style={{ display: "block", width: "100%" }}
               loading={isLoading ? true : false}
               type='primary'
               htmlType='submit'

@@ -25,6 +25,7 @@ import ProductDetail from "../pages/ProductDetail/ProductDetail";
 import Home from "../pages/Home/Home";
 import Cart from "../pages/Cart/Cart";
 import CartHistory from "../pages/User/CartHistory/CartHistory";
+import Search from "../pages/Search/Search";
 const user = [
   {
     path: "/",
@@ -75,6 +76,11 @@ const user = [
     path: "/cart-history",
     exact: false,
     component: CartHistory,
+  },
+  {
+    path: "/search",
+    exact: false,
+    component: Search,
   },
 ];
 

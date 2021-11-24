@@ -114,12 +114,14 @@ function Cart() {
     const sumCart = sum();
     const data = {
       list: cart,
-      ...value,
+      address: value.address,
+      phoneNumber: value.phoneNumber,
       total: sumCart[0],
       count: sumCart[1],
     };
     dispatch(order(data));
   };
+  const regexPhoneNumber = /(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/;
   useEffect(() => {
     document.querySelector(".sider").classList.remove("activeSider");
   }, []);
@@ -177,7 +179,14 @@ function Cart() {
                   label={"Số điện thoại"}
                   name='phoneNumber'
                   rules={[
-                    { required: true, message: "Địa chỉ không được để trống!" },
+                    {
+                      required: true,
+                      message: "Số điện thoại không được để trống!",
+                    },
+                    {
+                      pattern: regexPhoneNumber,
+                      message: "Số điện thoại không đúng định dạng",
+                    },
                   ]}
                 >
                   <Input />

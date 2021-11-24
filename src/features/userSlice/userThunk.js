@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { message } from "antd";
 import { cartApi } from "../../api/cartApi";
 import { userApi } from "../../api/userApi";
 
@@ -22,3 +23,16 @@ export const order = createAsyncThunk("user/order", async (data) => {
   const res = await cartApi.addCart(data);
   return res;
 });
+
+export const updateAvatar = createAsyncThunk("user/avatar", async (data) => {
+  const res = await userApi.update_avatar(data);
+  return res;
+});
+
+export const updateInfomation = createAsyncThunk(
+  "/user/update-infomation",
+  async (data) => {
+    const res = await userApi.update_infomation(data);
+    return res;
+  }
+);
