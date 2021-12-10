@@ -13,4 +13,8 @@ export const cartApi = {
     const url = `/cart/close-cart?cart=${id}`;
     return axiosClient.post(url);
   },
+  checkQuantity: (id, quantity) => {
+    const url = `/cart/check-quantity?idProduct=${id}`;
+    return axiosClient.post(url, { quantity: quantity });
+  },
 };

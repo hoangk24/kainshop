@@ -9,6 +9,7 @@ import NotFound from "../../pages/NotFound/NotFound";
 import { UserLayout } from "../../container/AppLayout";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { message } from "antd";
 
 function App() {
   const socketIo = useSelector((state) => state.user.socketIo);
@@ -32,12 +33,10 @@ function App() {
     if (!localStorage.getItem("cart")) {
       localStorage.setItem("cart", JSON.stringify([]));
     }
-    return () => {
-      socketIo.disconnect();
-    };
   }, []);
 
   useEffect(() => {
+    socketIo.on("adminChangedState", (msg) => message.success(msg));
     return () => {
       socketIo.emit("disconnect");
     };

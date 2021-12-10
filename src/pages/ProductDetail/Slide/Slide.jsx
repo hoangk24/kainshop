@@ -1,7 +1,6 @@
 import React from "react";
 import Slider from "react-slick";
 import {
-  SideBySideMagnifier,
   GlassMagnifier,
   Magnifier,
   MOUSE_ACTIVATION,
@@ -26,8 +25,8 @@ export default function Slide({ poster }) {
 
   const renderImage = poster?.map((item, index) => (
     <div key={index} className='slide-item'>
-      {/* <img src={item.url} alt='' /> */}
-      <SideBySideMagnifier
+      <GlassMagnifier
+        magnifierSize={200}
         imageSrc={item.url}
         mouseActivation={MOUSE_ACTIVATION.CLICK}
         touchActivation={TOUCH_ACTIVATION.TAP}

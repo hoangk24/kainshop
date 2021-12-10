@@ -12,16 +12,24 @@ import moment from "moment";
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { productApi } from "../../../api/productApi";
+import LoginModal from "../../../components/LoginModal/LoginModal";
 export default function ProductComment({ idProduct }) {
   const [form] = Form.useForm();
   const user = useSelector((state) => state.user.user);
   const isLogin = useSelector((state) => state.user.isLogin);
   const socketIo = useSelector((state) => state.user.socketIo);
+  const [rate, setRate] = useState(0);
   const [data, setData] = useState([]);
+  const desc = ["Tệ", "Tạm", "Bình thường", "Tốt", "Rất tốt"];
+
   const { TextArea } = Input;
   const onFinish = (value) => {
     if (!isLogin) {
       message.error("Hãy đăng nhập để tiếp tục bình luận!");
+      return;
+    }
+    if (rate === 0) {
+      message.error("Hãy đánh giá số sao của bạn cho sản phẩm này");
       return;
     }
     const comment = {
@@ -30,7 +38,9 @@ export default function ProductComment({ idProduct }) {
       avatar: user.avatar,
       fullName: user.fullName,
       content: value.comment,
+      rate: rate,
     };
+
     socketIo.emit("userCreateComment", comment);
     form.resetFields();
   };
@@ -93,7 +103,21 @@ export default function ProductComment({ idProduct }) {
                 <Comment
                   author={item.fullName}
                   avatar={<Avatar src={item.avatar} />}
-                  content={item.content}
+                  content={
+                    <div>
+                      <div>
+                        <Rate disabled value={item.rate} />
+                        {item.rate ? (
+                          <span className='ant-rate-text'>
+                            {desc[item.rate - 1]}
+                          </span>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                      {item.content}
+                    </div>
+                  }
                   datetime={moment().startOf("hour").from(item.createdAt)}
                 />
               </List.Item>
@@ -116,10 +140,15 @@ export default function ProductComment({ idProduct }) {
         >
           <TextArea />
         </Form.Item>
+        <Form.Item label='Đánh giá'>
+          <Rate defaultValue={rate} onChange={(number) => setRate(number)} />
+          {rate ? <span className='ant-rate-text'>{desc[rate - 1]}</span> : ""}
+        </Form.Item>
         <Form.Item>
           <Button htmlType='submit'>Thêm</Button>
         </Form.Item>
       </Form>
+      {/* <LoginModal /> */}
     </div>
   );
 }

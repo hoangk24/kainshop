@@ -11,10 +11,11 @@ const UserServices = {
     return JSON.parse(localStorage.getItem("user"));
   },
   updateUser: (data) => {
-    const { user, accessToken, refreshToken } = data;
+    const { user, accessToken, refreshToken, cart } = data;
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("accessToken", JSON.stringify(accessToken));
     localStorage.setItem("refreshToken", JSON.stringify(refreshToken));
+    localStorage.setItem("cart", JSON.stringify(cart.list));
   },
   removeUser: () => {
     localStorage.removeItem("user");

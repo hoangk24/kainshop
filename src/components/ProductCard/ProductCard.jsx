@@ -1,10 +1,11 @@
 import React from "react";
 import { Card } from "antd";
 import { useHistory } from "react-router";
+import SaleBagde from "../SaleBagde/SaleBagde";
 
 function ProductCard({ data }) {
   const history = useHistory();
-  const { _id, price, poster, description, name } = data;
+  const { _id, price, poster, description, name, discount } = data;
   const { Meta } = Card;
   return (
     <Card
@@ -21,6 +22,7 @@ function ProductCard({ data }) {
         title={name}
         description={description.substring(0, 30) + "..."}
       />
+      {discount && discount > 0 ? <SaleBagde discount={discount} /> : null}
     </Card>
   );
 }

@@ -38,4 +38,8 @@ export const userApi = {
     const url = "/user/update-infomation";
     return axiosClient.post(url, data);
   },
+  save_cart: (data) => {
+    const url = "/user/save-cart";
+    return axiosClient.post(url, data);
+  },
 };

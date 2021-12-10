@@ -50,4 +50,12 @@ export const adminApi = {
     const url = `/category/delete-category?id=${id}`;
     return axiosClient.delete(url);
   },
+  getCart: () => {
+    const url = "/cart/get-cart";
+    return axiosClient.get(url);
+  },
+  changeStateCart: (data) => {
+    const url = "/cart/change-state";
+    return axiosClient.post(url, data);
+  },
 };

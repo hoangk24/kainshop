@@ -5,9 +5,10 @@ import {
   order,
   updateAvatar,
   updateInfomation,
+  logOut,
 } from "./userThunk";
 import UserServices from "../../helper/userLocal";
-import { message, notification } from "antd";
+import { message } from "antd";
 import { io } from "socket.io-client";
 
 const userSlice = createSlice({
@@ -108,10 +109,34 @@ const userSlice = createSlice({
     [updateInfomation.fulfilled]: (state, action) => {
       localStorage.setItem("user", JSON.stringify(action.payload));
       state.user = action.payload;
+      message.success("Update thông tin thành công!");
     },
-    [updateInfomation.rejected]: (state, action) => {},
+    [updateInfomation.rejected]: (state, action) => {
+      message.error("Update thông tin không thành công!");
+    },
+    [logOut.pending]: (state, action) => {},
+    [logOut.fulfilled]: (state, action) => {
+      localStorage.removeItem("user");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("cart");
+      state.isLogin = false;
+      state.user = {};
+      message.success("Thành công!");
+    },
+    [logOut.rejected]: (state, action) => {
+      message.error("Thất bại!");
+    },
   },
 });
 const { reducer, actions } = userSlice;
 export const { addCart, removeCart, editCount, log_out } = actions;
 export default reducer;
+
+//  log_out: (state, action) => {
+//       // localStorage.removeItem("user");
+//       // localStorage.removeItem("accessToken");
+//       // localStorage.removeItem("refreshToken");
+//       // state.isLogin = false;
+//       // state.user = {};
+//     },

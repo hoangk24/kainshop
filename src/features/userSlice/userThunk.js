@@ -30,9 +30,14 @@ export const updateAvatar = createAsyncThunk("user/avatar", async (data) => {
 });
 
 export const updateInfomation = createAsyncThunk(
-  "/user/update-infomation",
+  "user/update-infomation",
   async (data) => {
     const res = await userApi.update_infomation(data);
     return res;
   }
 );
+
+export const logOut = createAsyncThunk("user/log_out", async (data) => {
+  const res = userApi.save_cart(data);
+  return res;
+});

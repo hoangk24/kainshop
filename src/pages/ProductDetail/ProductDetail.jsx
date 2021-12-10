@@ -2,13 +2,23 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { productApi } from "../../api/productApi";
 import Loading from "../Loading/Loading";
-import { Breadcrumb, Button, Form, InputNumber, Rate, Select } from "antd";
+import {
+  Breadcrumb,
+  Button,
+  Form,
+  InputNumber,
+  message,
+  Rate,
+  Select,
+  Tag,
+} from "antd";
 import Slide from "./Slide/Slide";
 import Paragraph from "antd/es/typography/Paragraph";
 import UserServices from "../../helper/userLocal";
 import { useDispatch } from "react-redux";
 import { addCart } from "../../features/userSlice/userSlice";
 import ProductComment from "./ProductComment/ProductComment";
+import { cartApi } from "../../api/cartApi";
 
 export default function ProductDetail() {
   const { Option } = Select;
@@ -31,18 +41,23 @@ export default function ProductDetail() {
         setIsLoading(false);
       });
   }, [id]);
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
     const data = {
       _id: product._id,
       name: product.name,
       poster: product.poster[0].url,
       price: product.price,
-      total: values.count * product.price,
+      total: values.count * discountFunction(product.price, product.discount),
       ...values,
     };
-    distpatch(addCart(data));
+    await cartApi.checkQuantity(product._id, values.count).then((res) => {
+      distpatch(addCart(data));
+    });
   };
-
+  const discountFunction = (price, percent) => {
+    const discount = (price * percent) / 100;
+    return price - discount;
+  };
   return (
     <div style={{ position: "relative" }} className={"product-detail"}>
       <Breadcrumb>
@@ -55,7 +70,10 @@ export default function ProductDetail() {
           <Slide poster={product.poster} />
         </div>
         <div className='product-info'>
-          <h1>{product.name}</h1>
+          <h1>
+            {product.name}
+            {product.quantity === 0 ? "(Đã hết hàng)" : null}
+          </h1>
           <div className='info-more'>
             <div className='rate'>
               <Rate defaultValue={3} />
@@ -81,6 +99,30 @@ export default function ProductDetail() {
               <span className='label'>Lần cật nhật sản phẩm của shop: </span>
               {product.updatedAt}
             </div>
+            <div>
+              <span className='label'>Số lượng tồn trong kho: </span>
+              {product.quantity}
+            </div>
+            <div>
+              <span className='label'>Giá sản phẩm </span>
+              <b style={{ color: "red" }}>
+                {product.price?.toLocaleString("vi-VN")} VNĐ
+              </b>
+            </div>
+            {product?.discount > 0 ? (
+              <div>
+                <span className='label'>
+                  Giảm: {product.discount}% ({" "}
+                  <b style={{ color: "red", fontSize: 30 }}>
+                    {discountFunction(
+                      product.price,
+                      product.discount
+                    ).toLocaleString("vi-VN")}
+                    VNĐ)
+                  </b>
+                </span>
+              </div>
+            ) : null}
           </div>
           <div className='delivery'>
             <h3>Miễn phí vận chuyển toàn quốc</h3>
@@ -99,8 +141,9 @@ export default function ProductDetail() {
                 { required: true, message: "Số lượng không được để trống!" },
               ]}
             >
-              <InputNumber min={0} max={20} size={"large"} />
+              <InputNumber min={1} max={product?.quantity} size={"large"} />
             </Form.Item>
+
             <Form.Item
               label={"Màu sắc"}
               name={"color"}

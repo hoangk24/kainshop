@@ -10,8 +10,8 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import UserServices from "../../helper/userLocal";
 import { Link } from "react-router-dom";
-import { log_out } from "../../features/userSlice/userSlice";
 import UserInfo from "./UserInfo/UserInfo";
+import { logOut } from "../../features/userSlice/userThunk";
 function Header() {
   const history = useHistory();
   const isLogin = useSelector((state) => state.user.isLogin);
@@ -22,7 +22,7 @@ function Header() {
   const { Header } = Layout;
   const dispatch = useDispatch();
   const handleLogout = () => {
-    dispatch(log_out());
+    dispatch(logOut({ list: JSON.parse(localStorage.getItem("cart")) }));
   };
   const onSearch = (value) => history.push(`/search?keyword=${value}`);
   const menuServices = (

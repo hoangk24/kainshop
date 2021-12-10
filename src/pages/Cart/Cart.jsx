@@ -20,6 +20,9 @@ import { Link } from "react-router-dom";
 
 function Cart() {
   const cart = useSelector((state) => state.user.cartLocal);
+  const user = useSelector((state) => state.user.user);
+  const [address, setAddress] = useState(user.address);
+  const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
   const dispatch = useDispatch();
   const handleChangeCount = (_id, count) => {
     const data = {
@@ -78,7 +81,7 @@ function Cart() {
       render: (count, record) => (
         <InputNumber
           min={0}
-          max={20}
+          // max={20}
           defaultValue={count}
           onChange={(value) => handleChangeCount(record._id, value)}
         />
@@ -111,11 +114,13 @@ function Cart() {
   ];
 
   const onFinish = async (value) => {
+    console.log(value);
+    const { address, phoneNumber } = value;
     const sumCart = sum();
     const data = {
       list: cart,
-      address: value.address,
-      phoneNumber: value.phoneNumber,
+      address: !address ? user.address : address,
+      phoneNumber: !phoneNumber ? user.phoneNumber : phoneNumber,
       total: sumCart[0],
       count: sumCart[1],
     };
@@ -166,30 +171,24 @@ function Cart() {
                 labelCol={{ span: 5 }}
                 onFinish={onFinish}
               >
-                <Form.Item
-                  label={"Địa chỉ nhận"}
-                  name='address'
-                  rules={[
-                    { required: true, message: "Địa chỉ không được để trống!" },
-                  ]}
-                >
-                  <Input />
+                <Form.Item label={"Địa chỉ nhận"} name='address'>
+                  <Input defaultValue={user?.address} />
                 </Form.Item>
                 <Form.Item
                   label={"Số điện thoại"}
                   name='phoneNumber'
                   rules={[
                     {
-                      required: true,
-                      message: "Số điện thoại không được để trống!",
-                    },
-                    {
                       pattern: regexPhoneNumber,
                       message: "Số điện thoại không đúng định dạng",
                     },
                   ]}
                 >
-                  <Input />
+                  <Input
+                    defaultValue={user?.phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    value={phoneNumber}
+                  />
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 5 }}>
                   <Button type={"primary"} htmlType={"submit"}>

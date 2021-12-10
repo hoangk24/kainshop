@@ -33,4 +33,8 @@ export const productApi = {
     const url = `/product/search?keyword=${keyword}`;
     return axiosClient.get(url);
   },
+  getProductGroup: () => {
+    const url = "/product/get-product-group";
+    return axiosClient.get(url);
+  },
 };

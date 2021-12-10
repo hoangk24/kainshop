@@ -46,8 +46,8 @@ function Product(props) {
     }
   }, [nsx, category]);
 
-  const renderCard = productList?.map((item) => (
-    <Col lg={6} md={8} sm={12} xs={12}>
+  const renderCard = productList?.map((item, index) => (
+    <Col key={index} lg={6} md={8} sm={12} xs={12}>
       <ProductCard key={item._id} data={item} />
     </Col>
   ));

@@ -1,7 +1,11 @@
 .product-admin {
   padding: 1rem;
   min-height: 100vh;
+
   &__title {
     text-align: center;
+  }
+  .product-admin-table {
+    overflow-x: auto;
   }
 }

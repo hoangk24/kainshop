@@ -1,4 +1,5 @@
 .product-card {
+  position: relative;
   .price {
     @include breakpoint(535) {
       font-size: 0.7rem !important;
@@ -8,5 +9,23 @@
     @include breakpoint(992) {
       padding: 0.7rem !important;
     }
+  }
+}
+
+.sale-bagde {
+  position: absolute;
+  width: 3rem;
+  top: 0;
+  right: 0;
+  img {
+    display: block;
+    width: 100%;
+  }
+  h5 {
+    position: absolute;
+    font-size: 1.3rem;
+    bottom: -3%;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
