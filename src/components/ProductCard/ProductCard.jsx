@@ -1,5 +1,5 @@
 import React from "react";
-import { Card } from "antd";
+import {Card, Skeleton} from "antd";
 import { useHistory } from "react-router";
 import SaleBagde from "../SaleBagde/SaleBagde";
 
@@ -12,7 +12,9 @@ function ProductCard({ data }) {
       onClick={() => history.push(`/product-detail/${_id}`)}
       className={"product-card"}
       hoverable
-      cover={<img alt='example' src={poster[1].url} />}
+      cover={
+        <img alt='example' src={poster[1].url} />
+     }
     >
       <span className='price' style={{ color: "red", fontWeight: "600" }}>
         {price.toLocaleString("vi-VN")} VNĐ

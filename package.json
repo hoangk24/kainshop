@@ -1,33 +1,42 @@
 {
-  "name": "shop-profjec",
-  "version": "0.0.0",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview"
-  },
-  "dependencies": {
-    "@africasokoni/react-image-magnifiers": "^1.0.2",
-    "@ant-design/icons": "^4.7.0",
-    "@reduxjs/toolkit": "^1.6.2",
-    "antd": "^4.16.13",
-    "axios": "^0.24.0",
-    "chart.js": "^3.6.0",
-    "moment": "^2.29.1",
-    "query-string": "^7.0.1",
-    "react": "^17.0.0",
-    "react-chartjs-2": "^4.0.0",
-    "react-dom": "^17.0.0",
-    "react-redux": "^7.2.6",
-    "react-router-dom": "^5.3.0",
-    "react-slick": "^0.28.1",
-    "redux": "^4.1.2",
-    "slick-carousel": "^1.8.1",
-    "socket.io-client": "^4.3.2"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-react": "^1.0.0",
-    "sass": "^1.43.4",
-    "vite": "^2.6.4"
-  }
+    "name": "shop-profjec",
+    "version": "0.0.0",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "serve": "vite preview",
+        "lint": "eslint ."
+    },
+    "dependencies": {
+        "@africasokoni/react-image-magnifiers": "^1.0.2",
+        "@ant-design/icons": "^4.7.0",
+        "@reduxjs/toolkit": "^1.6.2",
+        "antd": "^4.16.13",
+        "axios": "^0.24.0",
+        "chart.js": "^3.6.0",
+        "moment": "^2.29.1",
+        "query-string": "^7.0.1",
+        "react": "^17.0.0",
+        "react-chartjs-2": "^4.0.0",
+        "react-dom": "^17.0.0",
+        "react-redux": "^7.2.6",
+        "react-router-dom": "^5.3.0",
+        "react-slick": "^0.28.1",
+        "redux": "^4.1.2",
+        "slick-carousel": "^1.8.1",
+        "socket.io-client": "^4.3.2"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-react": "^1.0.0",
+        "eslint": "^8.4.1",
+        "eslint-config-airbnb": "^19.0.2",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-import": "^2.25.3",
+        "eslint-plugin-jsx-a11y": "^6.5.1",
+        "eslint-plugin-react": "^7.27.1",
+        "eslint-plugin-react-hooks": "^4.3.0",
+        "prettier": "^2.5.1",
+        "sass": "^1.43.4",
+        "vite": "^2.6.4"
+    }
 }

@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import { productApi } from "../../../api/productApi";
 import Slider from "react-slick";
 import ProductCard from "../../../components/ProductCard/ProductCard";
-import Loading from "../../Loading/Loading";
-
-function NewProduct(props) {
-  const [isLoading, setIsLoading] = useState(false);
+import {Result, Skeleton} from "antd";
+function NewProduct() {
   let settings = {
     dots: false,
     infinite: true,
@@ -40,24 +38,42 @@ function NewProduct(props) {
       },
     ],
   };
-  const [data, setData] = useState([]);
-  const renderProduct = data?.map((item, index) => (
-    <ProductCard key={index} data={item} />
-  ));
-  useEffect(async () => {
-    setIsLoading(true);
-    await productApi.getNewProduct().then((res) => {
-      setData(res.data);
-    });
-    setIsLoading(false);
+  const [data, setData] = useState(null);
+  const [error,setError] = useState((false))
+  useEffect( () => {
+    const fetch  = async()=>{
+      try{
+        await productApi.getNewProduct().then((res) => {
+          setData(res.data);
+        })
+      }
+      catch (e) {
+        setError(true)
+      }
+    }
+  fetch().then();
   }, []);
 
+
+  const render = useMemo(()=>{
+    if(error) return   <Result
+        status="500"
+        title="500"
+        subTitle="Sorry, something went wrong."
+    />
+    if(!data) return  <Skeleton active>
+    </Skeleton>
+    return  <Slider {...settings}>{data.map((item, index) => (
+        <ProductCard key={index} data={item} />
+    ))}</Slider>
+  },[data])
+
   return (
+
     <div className={"newProduct"}>
       <div className='newProduct__content'>
         <h1 style={{ textAlign: "center" }}>Sản phẩm mới nhất</h1>
-        <Slider {...settings}>{renderProduct}</Slider>
-        {isLoading ? <Loading /> : null}
+        {render}
       </div>
     </div>
   );

@@ -12,7 +12,6 @@ import moment from "moment";
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { productApi } from "../../../api/productApi";
-import LoginModal from "../../../components/LoginModal/LoginModal";
 export default function ProductComment({ idProduct }) {
   const [form] = Form.useForm();
   const user = useSelector((state) => state.user.user);

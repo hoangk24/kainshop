@@ -9,24 +9,24 @@ import {
   InputNumber,
   message,
   Rate,
-  Select,
+  Select, Skeleton,
   Tag,
 } from "antd";
 import Slide from "./Slide/Slide";
 import Paragraph from "antd/es/typography/Paragraph";
-import UserServices from "../../helper/userLocal";
 import { useDispatch } from "react-redux";
 import { addCart } from "../../features/userSlice/userSlice";
 import ProductComment from "./ProductComment/ProductComment";
 import { cartApi } from "../../api/cartApi";
 
 export default function ProductDetail() {
+  const distpatch = useDispatch();
   const { Option } = Select;
   const param = useParams();
   const [product, setProduct] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { id } = param;
-  const distpatch = useDispatch();
+
   useEffect(async () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     document.querySelector(".sider").classList.remove("activeSider");
@@ -65,10 +65,10 @@ export default function ProductDetail() {
         <Breadcrumb.Item>Product</Breadcrumb.Item>
         <Breadcrumb.Item>Produt Detail</Breadcrumb.Item>
       </Breadcrumb>
+
       <div className='product-detail__content'>
-        <div>
-          <Slide poster={product.poster} />
-        </div>
+        {isLoading? <Skeleton active/>:   <Slide poster={product.poster} />}
+
         <div className='product-info'>
           <h1>
             {product.name}
@@ -184,10 +184,10 @@ export default function ProductDetail() {
         <h1>Mô tả sản phẩm</h1>
         <Paragraph>{product.description}</Paragraph>
       </div>
+
       <div className='product-detail-comment'>
         <ProductComment idProduct={product._id} />
       </div>
-      {isLoading ? <Loading /> : null}
     </div>
   );
 }

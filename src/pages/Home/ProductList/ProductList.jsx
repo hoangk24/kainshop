@@ -1,57 +1,65 @@
-import React, { useEffect, useState } from "react";
-import { Col, Pagination, Row } from "antd";
-import { productApi } from "../../../api/productApi";
+import React, {useEffect, useMemo, useState} from "react";
+import {Col, Pagination, Result, Row, Skeleton} from "antd";
+import {productApi} from "../../../api/productApi";
 import ProductCard from "../../../components/ProductCard/ProductCard";
-import Loading from "../../Loading/Loading";
 
-function ProductList(props) {
-  const [data, setData] = useState({});
-  const { limit, page, totalDocuments, totalPage } = data;
-  const [isLoading, setIsLoading] = useState(false);
-  const renderProduct = data.data?.map((item, index) => (
-    <Col key={index} lg={4} sm={12} md={8} xs={12}>
-      <ProductCard data={item} />
-    </Col>
-  ));
+function ProductList() {
+    const [data, setData] = useState(null);
+    const [error, setError] = useState(false)
+    const [page,setPage] = useState(1)
+    useEffect(() => {
+        const fetch = async () => {
+            try {
+                await productApi.getProduct(page).then((res) => {
+                    setData(res);
+                });
+            } catch (e) {
+            setError(true)
+            }
+        }
+        fetch().then();
+    }, [page]);
 
-  const onchangePage = async (value) => {
-    setIsLoading(true);
-    await productApi.getProduct(value).then((res) => {
-      setData(res);
-      // setTimeout(() => {
-      setIsLoading(false);
-      // }, 1500)
-    });
-  };
 
-  useEffect(async () => {
-    setIsLoading(true);
-    await productApi.getProduct(1).then((res) => {
-      setData(res);
-      // setTimeout(() => {
-      setIsLoading(false);
-      // }, 1500)
-    });
-  }, []);
+    const onchangePage =  (value) => {
+        setPage(value)
+        setData(null)
+    };
 
-  return (
-    <div className={"product-list"}>
-      <div className='product-list__content'>
-        <h1>Tất cả sản phẩm của shop</h1>
-        <Row gutter={[16, 16]}>{renderProduct}</Row>
-        <div className={"product-list__pagination"}>
-          <Pagination
-            defaultCurrent={1}
-            current={page}
-            pageSize={12}
-            total={totalDocuments}
-            onChange={(value) => onchangePage(value)}
-          />
+
+    const render = useMemo(() => {
+        if (error) return  <Result
+            status="500"
+            title="500"
+            subTitle="Sorry, something went wrong."
+        />
+        if (!data) return <Skeleton active/>
+        return <>
+            <Row gutter={[16, 16]}>{data.data.map((item, index) => (
+                <Col key={index} lg={4} sm={12} md={8} xs={12}>
+                    <ProductCard data={item}/>
+                </Col>
+            ))}</Row>
+        </>
+    }, [data,page])
+
+    return (
+        <div className={"product-list"}>
+            <div className='product-list__content'>
+                <h1>Tất cả sản phẩm của shop</h1>
+                {render}
+                <div className={"product-list__pagination"}>
+                    <Pagination
+                        defaultCurrent={1}
+                        current={page}
+                        pageSize={12}
+                        total={data?.totalDocuments||30}
+                        onChange={(value) => onchangePage(value)}
+                    />
+                </div>
+            </div>
         </div>
-        {isLoading ? <Loading /> : null}
-      </div>
-    </div>
-  );
+    );
 }
 
 export default ProductList;
